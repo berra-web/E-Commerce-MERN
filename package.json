@@ -1,0 +1,22 @@
+{
+  "name": "e-commerce",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "server": "cd ./backend && npm start",
+    "client": "npm start --prefix ./frontend/",
+    "test": "npm test --prefix ./frontend/",
+    "dev": "concurrently \"elctron .\" \"npm run server\"  \"npm run client\" \"npm run test\"",
+    "build": "cd frontend && npm run build && cd .. && electron-builder"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "electron": "^15.0.0"
+  },
+  "dependencies": {
+    "electron-is-dev": "^2.0.0"
+  }
+}

@@ -3,20 +3,23 @@ import { Link, Redirect } from 'react-router-dom';
 import ShowImage from './ShowImage';
 import moment from 'moment';
 import { addItem, updateItem, removeItem } from './cartHelpers';
-import { Card } from 'react-bootstrap'
+import { addItemWishList, removeItemWishList } from './wishListHelpers';
 
-
-const Product = ({
+const Card = ({
   product,
   showViewProductButton = true,
   showAddToCartButton = true,
+  showAddToWishListButton = true,
+
   cartUpdate = false,
   showRemoveProductButton = false,
+  showRemoveProductButtonWishList = false,
   setRun = f => f,
   run = undefined
   // changeCartSize
 }) => {
   const [redirect, setRedirect] = useState(false);
+  const [redirectToWishList, setRedirectWishList] = useState(false);
   const [count, setCount] = useState(product.count);
 
   const showViewButton = showViewProductButton => {
@@ -28,6 +31,7 @@ const Product = ({
       )
     );
   };
+
   const addToCart = () => {
     // console.log('added');
     addItem(product, setRedirect(true));
@@ -42,12 +46,35 @@ const Product = ({
   const showAddToCartBtn = showAddToCartButton => {
     return (
       showAddToCartButton && (
-        <button onClick={addToCart} className="btn btn-outline-warning mt-2 mb-2 card-btn-1  ">
+        <button onClick={addToCart} className="btn btn-outline-warning m-2 mb-2 card-btn-1  ">
           Add to cart
         </button>
       )
     );
   };
+
+  const addToWishList = () => {
+    // console.log('added');
+    addItemWishList(product, setRedirectWishList(true));
+  };
+
+  const shouldRedirectWishList = redirectToWishList => {
+    if (redirectToWishList) {
+      return <Redirect to="/wishlist" />;
+    }
+  };
+
+
+  const showAddToWishListBtn = showAddToWishListButton => {
+    return (
+      showAddToWishListButton && (
+        <button onClick={addToWishList} className="btn btn-outline-info mt-2 mb-2 card-btn-2  ">
+          Add to Wishlist
+        </button>
+      )
+    );
+  };
+
 
   const showStock = quantity => {
     return quantity > 0 ? (
@@ -79,6 +106,7 @@ const Product = ({
       )
     );
   };
+
   const showRemoveButton = showRemoveProductButton => {
     return (
       showRemoveProductButton && (
@@ -94,34 +122,34 @@ const Product = ({
       )
     );
   };
+
+  const showRemoveButtonWishList = showRemoveProductButtonWishList => {
+    return (
+      showRemoveProductButtonWishList && (
+        <button
+          onClick={() => {
+            removeItemWishList(product._id);
+            setRun(!run); // run useEffect in parent Cart
+          }}
+          className="btn btn-outline-danger mt-2 mb-2"
+        >
+          Remove Product
+        </button>
+      )
+    );
+  };
+
   return (
-    <>
-    <Card className='my-3 p-3 rounded'>
-    
-      <Card.Title as='div'> <strong>{product.name }</strong> </Card.Title>
+    <div className="card ">
+      <div className="card-header card-header-1 ">{product.name}</div>
       <div className="card-body">
         {shouldRedirect(redirect)}
-          <ShowImage item={product} url="product" />
-          
-            <Card.Text as='h3'>
-                 {product.description.substring(0, 100)}
-
-            </Card.Text>
-            <Card.Text as='h3'>
-                 ${product.price}
-
-            </Card.Text>
-            <Card.Text as='div'>
-                 Category: {product.category && product.category.name}
-
-            </Card.Text>
-            <Card.Text as='div'>
-                 Added on {moment(product.createdAt).fromNow()}
-
-            </Card.Text>
-            
-            
-        
+        {shouldRedirectWishList(redirectToWishList)}
+        <ShowImage item={product} url="product" />
+        <p className="card-p  mt-2">{product.description.substring(0, 100)} </p>
+        <p className="card-p black-10">$ {product.price}</p>
+        <p className="black-9">Category: {product.category && product.category.name}</p>
+        <p className="black-8">Added on {moment(product.createdAt).fromNow()}</p>
         {showStock(product.quantity)}
         <br />
 
@@ -129,14 +157,16 @@ const Product = ({
 
         {showAddToCartBtn(showAddToCartButton)}
 
+        {showAddToWishListBtn(showAddToWishListButton)}
+
         {showRemoveButton(showRemoveProductButton)}
+
+        {showRemoveButtonWishList(showRemoveProductButtonWishList)}
 
         {showCartUpdateOptions(cartUpdate)}
       </div>
-        
-        </Card>
-      </>
+    </div>
   );
 };
 
-export default Product;
+export default Card;

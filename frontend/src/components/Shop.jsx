@@ -103,11 +103,12 @@ const Shop = () => {
             className="container-fluid"
         >
                 <Row>
-                <Col>
+                <Col xs={6} sm={6} md={6} lg={6} xl={9}>
                     
                     <DropdownButton
                         title="Filter by category"
                         align="end"
+                        variant="secondary"
                     >
                         <Checkbox
                             categories={categories}
@@ -117,11 +118,12 @@ const Shop = () => {
                         />
                     </DropdownButton>
                 </Col>
-                <Col>
+                <Col xs={6} sm={6} md={6} lg={4} xl={3}>
                     
                     <DropdownButton
                         title="Filter by price range"
-                        align="end">
+                        align="end"
+                        variant="secondary">
                         
                         <RadioBox
                             prices={prices}
@@ -138,7 +140,7 @@ const Shop = () => {
                     <h2 className="mb-4">Products</h2>
                     <Row>
                         {filteredResults.map((product, i) => (
-                            <Col key={i} sm={12} md={6} lg={4} xl={3}>
+                            <Col key={i} sm={12} md={6} lg={4} xl={4}>
                                 <Card product={product} />
                             </Col>
                         ))}

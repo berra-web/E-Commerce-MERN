@@ -1,13 +1,12 @@
 import React from 'react';
 import Menu from './Menu';
 import "../styles.css"
-
+import { Container } from 'react-bootstrap'
 export default function Layout({ title = 'Title', description = 'Description', className, children }) {
     return (
-        <div>
+        <div >
             <Menu />
-            
-            <div className={className}>{children}</div>
+            <Container className={className}>{children}</Container>
         </div>
     )
 }

@@ -8,7 +8,6 @@
   -moz-animation: Gradient 15s ease infinite;
   animation: Gradient 15s ease infinite;
 }
-
 @-webkit-keyframes Gradient {
   0% {
     background-position: 0% 50%;

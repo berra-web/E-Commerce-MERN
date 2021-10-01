@@ -6,6 +6,7 @@ import Home from './components/Home';
 import AddCategory from './admin/AddCategory';
 import AddProduct from './admin/AddProduct';
 import Shop from './components/Shop';
+import WishList from './components/WishList';
 import PrivateRoute from './components/auth/PrivateRoute';
 import Dashboard from './user/UserDashboard';
 import AdminRoute from './components/auth/AdminRoute';
@@ -24,6 +25,7 @@ export default function Routes() {
             <Switch>
                 <Route path='/' exact component={Home} />
                 <Route path='/shop' exact component={Shop} />
+                <Route path='/WishList' exact component={WishList} />
                 <Route path='/signin' exact component={Signin} />
                 <Route path='/signup' exact component={Signup} />
 
