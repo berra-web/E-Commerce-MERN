@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 
 export default function AdminDashboard() {
 
-    const { user: { _id, name, email, role } } = isAuthenticated();
+    const { user: {name, email, role } } = isAuthenticated();
 
     const adminLinks = () => {
         return (
